@@ -65,19 +65,19 @@ const Header = () => {
             >
             <nav>
                 <a href="mailto: kieberp@yahoo.com" style={{ marginRight: '16px' }}>
-                <FontAwesomeIcon icon={faEnvelope} />
+                <FontAwesomeIcon icon={faEnvelope} size="2x"/>
                 </a>
                 <a href="https://github.com/pkieber" style={{ marginRight: '16px' }}>
-                <FontAwesomeIcon icon={faGithub} />
+                <FontAwesomeIcon icon={faGithub} size="2x"/>
                 </a>
                 <a href="https://www.linkedin.com/in/pkieber" style={{ marginRight: '16px' }}>
-                <FontAwesomeIcon icon={faLinkedin} />
+                <FontAwesomeIcon icon={faLinkedin} size="2x"/>
                 </a>
                 <a href="https://www.medium.com" style={{ marginRight: '16px' }}>
-                <FontAwesomeIcon icon={faMedium} />
+                <FontAwesomeIcon icon={faMedium} size="2x"/>
                 </a>
                 <a href="https://stackoverflow.com">
-                <FontAwesomeIcon icon={faStackOverflow} />
+                <FontAwesomeIcon icon={faStackOverflow} size="2x"/>
                 </a>
             </nav>
             <nav>
