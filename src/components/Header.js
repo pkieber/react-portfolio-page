@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -7,20 +7,20 @@ import {
     faMedium,
     faStackOverflow,
 } from "@fortawesome/free-brands-svg-icons";
-import { Box, HStack, Link } from "@chakra-ui/react";
+import { Box, HStack } from "@chakra-ui/react";
 
 const socials = [
     {
         icon: faEnvelope,
-        url: "mailto: kieberp@yahoo.com",
+        url: "mailto: testmail@yahoo.com",
     },
     {
         icon: faGithub,
-        url: "https://github.com/pkieber",
+        url: "https://github.com",
     },
     {
         icon: faLinkedin,
-        url: "https://www.linkedin.com/in/pkieber",
+        url: "https://www.linkedin.com",
     },
     {
         icon: faMedium,
@@ -33,83 +33,95 @@ const socials = [
 ];
 
 
-const SocialIcon = ({ icon, url }) => (
-    <a href={url} style={{ marginRight: '16px'}}>
-        <FontAwesomeIcon icon={icon} size="2x" />
-    </a>
-);
+/** 
+* useRef hook is used to create a reference to a DOM element, in order to tweak the header styles and run a transition animation. 
+* useEffect hook is used to perform a subscription when the component is mounted and to unsubscribe when the component is unmounted. 
+* Implementation to smoothly navigate to different sections of the page when clicking on the header elements. 
+*/ 
+const Header = () => { 
+    const headerRef = useRef(null); 
+    
+    useEffect(() => { 
+        let prevScrollPos = window.scrollY; 
+        
+        const handleScroll = () => { 
+            const currentScrollPos = window.scrollY; 
+            const headerElement = headerRef.current; 
+            if (!headerElement) { 
+            return; 
+            } 
+            if (prevScrollPos > currentScrollPos) { 
+            headerElement.style.transform = "translateY(0)"; 
+            } else { 
+            headerElement.style.transform = "translateY(-200px)"; 
+            } 
+            prevScrollPos = currentScrollPos; 
+        } 
+        window.addEventListener('scroll', handleScroll) 
+        
+        return () => { 
+            window.removeEventListener('scroll', handleScroll) 
+        } 
+        }, []); 
+        
+        const handleClick = (anchor) => () => { 
+        const id = `${anchor}-section`; 
+        const element = document.getElementById(id); 
+        if (element) { 
+            element.scrollIntoView({ 
+            behavior: "smooth", 
+            block: "start", 
+            }); 
+        } 
+    }; 
+    return ( 
+        <Box 
+            position="fixed" 
+            top={0} 
+            left={0} 
+            right={0} 
+            translateY={0} 
+            transitionProperty="transform" 
+            transitionDuration=".3s" 
+            transitionTimingFunction="ease-in-out" 
+            backgroundColor="#18181b" 
+            ref={headerRef} 
+        > 
+            <Box color="white" maxWidth="1280px" margin="0 auto"> 
+            <HStack 
+                px={16} 
+                py={4} 
+                justifyContent="space-between" 
+                alignItems="center" 
+            > 
+                <nav> 
+                <HStack spacing={8}> 
+                    {socials.map(({ icon, url }) => ( 
+                    <a 
+                        key={url} 
+                        href={url} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                    > 
+                        <FontAwesomeIcon icon={icon} size="2x" key={url} /> 
+                    </a> 
+                    ))} 
+                </HStack> 
+                </nav> 
+                <nav> 
+                <HStack spacing={8}> 
+                    <a href="#projects" onClick={handleClick("projects")}> 
+                    Projects 
+                    </a> 
+                    <a href="#contactme" onClick={handleClick("contactme")}> 
+                    Contact Me 
+                    </a> 
+                </HStack> 
+                </nav> 
+            </HStack> 
+            </Box> 
+        </Box> 
+    ); 
+}; 
 
-
-const Header = () => {
-    const [scrollingUp, setScrollingUp] = useState(true);
-    const prevScrollY = useRef(0);
-
-    const handleScroll = () => {
-        const currentScrollY = window.scrollY;
-        setScrollingUp(currentScrollY < prevScrollY.current);
-        prevScrollY.current = currentScrollY;
-    };
-
-    useEffect(() => {
-        window.addEventListener("scroll", handleScroll);
-
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-        };
-    }, []);
-
-    const translateY = scrollingUp ? "0" : "-200px";
-
-    const handleClick = (anchor) => () => {
-        const id = `${anchor}-section`;
-        const element = document.getElementById(id);
-        if (element) {
-            element.scrollIntoView({
-                behavior: "smooth",
-                block: "start",
-            });
-        }
-    };
-
-    const socialLinks = socials.map((social, index) => (
-        <SocialIcon key={index} {...social} />
-    ));
-
-    return (
-        <Box
-            position="fixed"
-            top={0}
-            left={0}
-            right={0}
-            transform={`translateY(${translateY})`}
-            transitionProperty="transform"
-            transitionDuration=".3s"
-            transitionTimingFunction="ease-in-out"
-            backgroundColor="#18181b"
-        >
-            <Box color="white" maxWidth="1280px" margin="0 auto">
-                <HStack
-                    px={16}
-                    py={4}
-                    justifyContent="space-between"
-                    alignItems="center"
-                >
-                    <nav>
-                        {socialLinks}
-                    </nav>
-                    <nav>
-                        <HStack spacing={8}>
-                            <Link to="/#projects-section" onClick={handleClick("projects")}>
-                                Projects
-                            </Link>
-                            <Link to="/#contactme-section" onClick={handleClick("contactme")}>
-                                Contact Me
-                            </Link>
-                        </HStack>
-                    </nav>
-                </HStack>
-            </Box>
-        </Box>
-    );
-};
-export default Header;
+export default Header; 

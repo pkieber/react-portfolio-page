@@ -27,7 +27,7 @@ const ContactMeSection = () => {
         initialValues: {
             firstName: '',
             email: '',
-            type: '',
+            type: 'hireMe',
             comment: '',
         },
 
@@ -52,7 +52,9 @@ const ContactMeSection = () => {
         validationSchema: Yup.object({
             firstName: Yup.string().required('Name is required'),
             email: Yup.string().email('Invalid email address').required('Email is required'),
-            comment: Yup.string().required('Message is required'),
+            comment: Yup.string()
+                .min(25, "Must be 25 characters at minimum")
+                .required('Message is required'),
         }),
     });
 
