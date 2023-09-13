@@ -48,12 +48,12 @@ const Header = () => {
             const currentScrollPos = window.scrollY; 
             const headerElement = headerRef.current; 
             if (!headerElement) { 
-            return; 
+                return; 
             } 
             if (prevScrollPos > currentScrollPos) { 
-            headerElement.style.transform = "translateY(0)"; 
+                headerElement.style.transform = "translateY(0)"; 
             } else { 
-            headerElement.style.transform = "translateY(-200px)"; 
+                headerElement.style.transform = "translateY(-200px)"; 
             } 
             prevScrollPos = currentScrollPos; 
         } 
@@ -69,8 +69,8 @@ const Header = () => {
         const element = document.getElementById(id); 
         if (element) { 
             element.scrollIntoView({ 
-            behavior: "smooth", 
-            block: "start", 
+                behavior: "smooth", 
+                block: "start", 
             }); 
         } 
     }; 
@@ -97,26 +97,26 @@ const Header = () => {
                 <nav> 
                 <HStack spacing={8}> 
                     {socials.map(({ icon, url }) => ( 
-                    <a 
-                        key={url} 
-                        href={url} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                    > 
-                        <FontAwesomeIcon icon={icon} size="2x" key={url} /> 
-                    </a> 
+                        <a 
+                            key={url} 
+                            href={url} 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                        > 
+                            <FontAwesomeIcon icon={icon} size="2x" key={url} /> 
+                        </a> 
                     ))} 
                 </HStack> 
                 </nav> 
                 <nav> 
-                <HStack spacing={8}> 
-                    <a href="#projects" onClick={handleClick("projects")}> 
-                    Projects 
-                    </a> 
-                    <a href="#contactme" onClick={handleClick("contactme")}> 
-                    Contact Me 
-                    </a> 
-                </HStack> 
+                    <HStack spacing={8}> 
+                        <a href="#projects" onClick={handleClick("projects")}> 
+                            Projects 
+                        </a> 
+                        <a href="#contactme" onClick={handleClick("contactme")}> 
+                            Contact Me 
+                        </a> 
+                    </HStack> 
                 </nav> 
             </HStack> 
             </Box> 
